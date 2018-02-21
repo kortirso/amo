@@ -1,4 +1,5 @@
 RSpec.describe Config, type: :model do
+  it { should validate_presence_of :login }
   it { should validate_presence_of :api_key }
 
   it 'should be valid' do

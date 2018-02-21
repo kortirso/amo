@@ -1,10 +1,10 @@
 # Represents configuration
 class Config < ApplicationRecord
-  validates :api_key, presence: true
+  validates :login, :api_key, presence: true
 
   class << self
-    def current_key
-      Config.last.try(:api_key)
+    def current
+      Config.last
     end
   end
 end
