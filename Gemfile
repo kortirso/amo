@@ -8,7 +8,7 @@ git_source(:github) do |repo_name|
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.4'
+gem 'rails', '5.1.4'
 
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.21'
@@ -41,11 +41,10 @@ group :development, :test do
 end
 
 group :development do
-  gem 'capistrano', require: false
+  gem 'capistrano', '~> 3.10', require: false
   gem 'capistrano-bundler', require: false
-  gem 'capistrano-rails', require: false
+  gem 'capistrano-rails', '~> 1.3', require: false
   gem 'capistrano-rvm', require: false
-  gem 'capistrano-sidekiq', require: false
   gem 'listen', '~> 3.0.5'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
