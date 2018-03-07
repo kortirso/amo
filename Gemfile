@@ -33,6 +33,9 @@ gem 'rubocop', '~> 0.49.1', require: false
 # Different
 gem 'therubyracer', platforms: :ruby
 
+# HTTP
+gem 'httparty', '0.16'
+
 group :development, :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'

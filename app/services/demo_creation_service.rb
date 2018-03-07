@@ -1,8 +1,10 @@
-require 'net/http'
-require 'json'
+require 'httparty'
 
 # Service for creating DemoForms
 class DemoCreationService
+  include HTTParty
+  base_uri 'https://workandplay.amocrm.ru/api/v2/incoming_leads'
+
   attr_reader :login, :api_key
 
   def initialize
@@ -11,16 +13,16 @@ class DemoCreationService
     @api_key = config.api_key
   end
 
-  def call(args = {})
-    header = {'Content-Type': 'application/json'}
-    uri = URI(base_uri)
-    req = Net::HTTP::Post.new(uri, header)
-    req.body = {"add":[{"source_name":"http://workandplay.ru/","source_uid":"11","created_at":Time.now.to_i,"incoming_entities":{"leads":[{"name":args[:username]}]},"incoming_lead_info":{"form_id":"1","form_page":"http://workandplay.ru/","ip":"localhost","service_code":"1"}}]}.to_json
-    response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) { |http| http.request(req) }
-    JSON.parse(response.body)
+  def get_leads
+    response = self.class.get("?login=#{login}&api_key=#{api_key}")
+    JSON.parse(response.parsed_response)
   end
 
-  private def base_uri
-    "https://workandplay.amocrm.ru/api/v2/incoming_leads/form?login=#{login}&api_key=#{api_key}"
+  def create_lead(args = {})
+    body = {"add":[{"source_name":"http://workandplay.ru","source_uid":"1","created_at":Time.now.to_i,"incoming_entities":{"leads":[{"name":'userio'}]},"incoming_lead_info":{"form_id":"1","form_page":"http://workandplay.ru","ip":"localhost","service_code":"1"}}]}
+    headers = {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+
+    response = self.class.post("/form?login=#{login}&api_key=#{api_key}", body: body, headers: headers)
+    JSON.parse(response.parsed_response)
   end
 end
