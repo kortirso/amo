@@ -4,8 +4,8 @@ module Api
       def demo
         demo = DemoCreationService.new
         demo.auth
-        creation = demo.create_lead(demo_params)
-        render json: creation, status: 200
+        response = demo.create_lead(demo_params)
+        render json: response, status: 200
       end
 
       private def demo_params
